@@ -9,11 +9,18 @@ namespace Isu.Services
     public class IsuService : IIsuService
     {
         private const uint MaxCountInGroup = 25;
+
         private readonly List<Group> _groups;
         private readonly List<Student> _students;
         private readonly Dictionary<Group, List<Student>> _assignments;
-
         public IsuService()
+        {
+            _groups = new List<Group>();
+            _students = new List<Student>();
+            _assignments = new Dictionary<Group, List<Student>>();
+        }
+
+        public IsuService(List<Student> students, List<Group> groups)
         {
             _groups = new List<Group>();
             _students = new List<Student>();
@@ -39,8 +46,6 @@ namespace Isu.Services
         public Student AddStudent(Group @group, string name)
         {
             Group gr = _groups.FirstOrDefault(gr => gr.GroupName == group.GroupName);
-            if (gr is null)
-                throw new IsuException("Invalid group name");
             if (_assignments[gr].Count >= MaxCountInGroup)
                 throw new IsuException("Group has max count of students");
             var student = new Student(name);
@@ -48,7 +53,6 @@ namespace Isu.Services
                 throw new IsuException("This student already exists");
             student.StudentGroup = gr;
             _assignments[gr].Add(student);
-            _groups.Add(gr);
             _students.Add(student);
             return student;
         }
@@ -75,7 +79,10 @@ namespace Isu.Services
 
         public List<Student> FindStudents(CourseNumber courseNumber)
         {
-            return _students.Where(s => s.StudentGroup.CourseNumber == courseNumber).ToList();
+            return _assignments
+                .Where(g => g.Key.CourseNumber.Value == courseNumber.Value)
+                .SelectMany(x => x.Value)
+                .ToList();
         }
 
         public Group FindGroup(string groupName)

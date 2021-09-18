@@ -7,6 +7,6 @@ namespace Isu.Models
             Value = value;
         }
 
-        private uint Value { get; }
+        public uint Value { get; }
     }
 }
