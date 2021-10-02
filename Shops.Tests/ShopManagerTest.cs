@@ -15,8 +15,8 @@ namespace Shops.Tests
             string address = "Чкаловский 16";
             Shop shop = shopManager.Create("Okey", address);
             string name = "Okey";
-            Assert.Equals(shop.ShopName, name);
-            Assert.Equals(shop.Address, address);
+            Assert.AreEqual(shop.ShopName, name);
+            Assert.AreEqual(shop.Address, address);
         }
 
         [Test]
