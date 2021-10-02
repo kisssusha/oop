@@ -25,14 +25,21 @@ namespace Shops.Services
 
         public Product RegisterProduct(string productName)
         {
-            var prod = new Product(productName);
-            _registeredProducts.Add(prod);
+            var prod = _registeredProducts.FirstOrDefault(x =>
+                x.ProductName.Equals(productName, StringComparison.InvariantCultureIgnoreCase));
+
+            if (prod is null)
+            {
+                prod = new Product(productName);
+                _registeredProducts.Add(prod);
+            }
+
             return prod;
         }
 
         public Shop FindBestPrice(ProductsList productsList)
         {
-            uint cost = uint.MaxValue;
+            uint? cost = null;
             Shop sh = null;
             foreach (Shop shop in _shops)
             {
@@ -42,14 +49,14 @@ namespace Shops.Services
                 cost = currentCost;
             }
 
-            if (cost == uint.MaxValue)
+            if (cost is null)
                 throw new Exception("Shops haven't this count of products");
             return sh;
         }
 
         public Shop FindShop(string shopName, string address)
         {
-            return _shops.FirstOrDefault(shop => shop.Address == address && shop.ShopName == shopName);
+            return _shops.FirstOrDefault(shop => shop.ShopName == shopName);
         }
     }
 }

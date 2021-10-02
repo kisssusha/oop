@@ -56,11 +56,16 @@ namespace Shops.Models
                 if (_productsDictionary[prod].Count < productInfo.Count)
                     throw new Exception($"Shop hasn't {productInfo.Count} {prod.ProductName}");
                 cost += productInfo.Price * productInfo.Count;
-                _productsDictionary[prod].Count -= productInfo.Count;
             }
 
             if (person.Money < cost)
                 throw new Exception("Person doesn't have enough money");
+            foreach ((Product product, ShopProductInfo productInfo) in products)
+            {
+                Product prod = FindProduct(product.Guid);
+                _productsDictionary[prod].Count -= productInfo.Count;
+            }
+
             person.Money -= cost;
         }
 

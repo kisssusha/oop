@@ -11,13 +11,12 @@ namespace Shops.Tests
         [Test]
         public void CreateShop_ThrowException()
         {
-            Assert.Catch<Exception>(() =>
-            {
-                var shopManager = new ShopManager();
-                Shop shop = shopManager.Create("Okey", "Чкаловский 16");
-                if(shop.ShopName != "Lenta" || shop.Address != "lol")
-                    Assert.Fail();
-            });
+            var shopManager = new ShopManager();
+            string address = "Чкаловский 16";
+            Shop shop = shopManager.Create("Okey", address);
+            string name = "Okey";
+            Assert.Equals(shop.ShopName, name);
+            Assert.Equals(shop.Address, address);
         }
 
         [Test]
