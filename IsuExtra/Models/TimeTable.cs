@@ -8,7 +8,7 @@ namespace IsuExtra.Models
 {
     public class TimeTable
     {
-        private int _duringOfLesson = 90;
+        private const int _duringOfLesson = 90;
         private List<Lesson> _timeTable;
 
         public TimeTable()
@@ -22,31 +22,10 @@ namespace IsuExtra.Models
         {
             if (les == null) throw new ArgumentNullException(nameof(les));
 
-            if (_timeTable.All(lesson => ((lesson.TimeOfLesson - _duringOfLesson > 0) &&
-                                          (lesson.TimeOfLesson + _duringOfLesson <= les.TimeOfLesson ||
-                                           les.TimeOfLesson + _duringOfLesson <= lesson.TimeOfLesson))))
-            {
-                if (les.TimeOfLesson < 9990)
-                {
-                    _timeTable.Add(les);
-                }
-                else
-                {
-                    throw new IsuExtraException(" Unable to add item");
-                }
-            }
-            else
-            {
+            if (_timeTable.Any(lesson => lesson.TimeOfLesson + _duringOfLesson > les.TimeOfLesson &&
+                                         les.TimeOfLesson + _duringOfLesson > lesson.TimeOfLesson))
                 throw new IsuExtraException(" Unable to add item");
-            }
-        }
-
-        public void GetInfo()
-        {
-            foreach (Lesson les in _timeTable)
-            {
-                Console.WriteLine(les.NameOfLesson);
-            }
+            _timeTable.Add(les);
         }
     }
 }

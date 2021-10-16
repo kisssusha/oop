@@ -1,14 +1,19 @@
+using System;
+using IsuExtra.Tools;
+
 namespace IsuExtra.Models
 {
     public class Lesson
     {
+        private const int _finishOfWeek = 9990;
         public Lesson(string nameOfLesson, Group nameGroup, Teacher teacher, int timeOfLesson, string numberAudit)
         {
-            NameOfLesson = nameOfLesson;
-            TeacherInLesson = teacher;
+            NameOfLesson = nameOfLesson ?? throw new ArgumentNullException(nameof(nameOfLesson));
+            TeacherInLesson = teacher ?? throw new ArgumentNullException(nameof(teacher));
+            if (timeOfLesson is < 0 or > _finishOfWeek) throw new IsuExtraException("Invalid time");
             TimeOfLesson = timeOfLesson;
             NumberAudit = numberAudit;
-            NameGroup = nameGroup;
+            NameGroup = nameGroup ?? throw new ArgumentNullException(nameof(nameGroup));
         }
 
         public string NameOfLesson { get; }

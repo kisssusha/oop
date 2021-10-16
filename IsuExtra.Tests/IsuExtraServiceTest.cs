@@ -49,9 +49,7 @@ namespace IsuExtra.Tests
         {
             Faculty faculty = _isuService.Faculties.Keys.First(w => w.NameOfFaculty == "M3");
             faculty.AddExtraLesson(new ExtraLesson("Analize"));
-            ExtraLesson extraLesson = _extraLessonsService.GetExtraLessons().FirstOrDefault(o => o.NameExtraLesson == "Analize");
-            if (extraLesson is null)
-                Assert.Fail();
+            Assert.IsNotNull(_extraLessonsService.GetExtraLessons().FirstOrDefault(o => o.NameExtraLesson == "Analize"));
         }
 
         [Test]
@@ -63,6 +61,8 @@ namespace IsuExtra.Tests
             Student student = _isuService.FindStudent("kisssusha");
            
             _extraLessonsService.AddStudentToIsuExtraStream(student, isuExtraStream);
+            
+            Assert.IsTrue(_extraLessonsService.GetStudents(extraLesson).Contains(student));
         }
 
         [Test]
@@ -88,9 +88,8 @@ namespace IsuExtra.Tests
             Student student2 = _isuService.FindStudent("Grisha");
             
             _extraLessonsService.AddStudentToIsuExtraStream(student2, isuExtraStream);
-            if(_extraLessonsService.GetStudentsWithoutExtraLesson().Contains(student2) 
-               || !_extraLessonsService.GetStudentsWithoutExtraLesson().Contains(student1))
-                Assert.Fail();
+            
+            Assert.IsFalse(_extraLessonsService.GetStudentsWithoutExtraLesson().Contains(student2));
         }
 
         [Test]
@@ -105,9 +104,19 @@ namespace IsuExtra.Tests
             _extraLessonsService.AddStudentToIsuExtraStream(student1, isuExtraStream);
             _extraLessonsService.AddStudentToIsuExtraStream(student2, isuExtraStream);
             
-            if(_extraLessonsService.GetStudentsWithExtraLesson().Contains(student2) 
-               && _extraLessonsService.GetStudentsWithExtraLesson().Contains(student1))
-                Assert.Fail();
+            Assert.IsFalse(_extraLessonsService.GetStudentsWithoutExtraLesson().Contains(student2));
+            Assert.IsFalse(_extraLessonsService.GetStudentsWithoutExtraLesson().Contains(student1));
+        }
+
+        [Test]
+
+        public void GetIsuExtraStreamTest()
+        {
+            Faculty faculty = _isuService.Faculties.Keys.First(w => w.NameOfFaculty == "M3");
+            ExtraLesson extraLesson = faculty.AddExtraLesson(new ExtraLesson("Analize"));
+            IsuExtraStream isuExtraStream = extraLesson.AddExtraStream(new IsuExtraStream("ANL", new Teacher("jnbj"), 500, "57879g"));
+
+            Assert.IsTrue(_extraLessonsService.GetStreams(extraLesson).Contains(isuExtraStream));
         }
     }
 }

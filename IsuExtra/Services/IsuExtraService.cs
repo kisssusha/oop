@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using Isu.Tools;
 using IsuExtra.Models;
 using IsuExtra.Services;
@@ -38,6 +37,7 @@ namespace IsuEXtra.Services
 
         public Group AddGroup(string name)
         {
+            if (name == null) throw new ArgumentNullException(nameof(name));
             if (string.IsNullOrWhiteSpace(name) || name.Length != 5)
                 throw new IsuExtraException("Invalid group name");
             if (!uint.TryParse(name.Substring(3, 2), out uint groupNum))
@@ -60,7 +60,7 @@ namespace IsuEXtra.Services
             var student = new Student(name, gr);
             if (_assignments[gr].Any(st => st.Name == student.Name))
                 throw new IsuException("This student already exists");
-            student.StudentGroup = gr;
+            student.ChangeGroup(gr);
             _assignments[gr].Add(student);
             _students.Add(student);
             return student;
@@ -119,7 +119,7 @@ namespace IsuEXtra.Services
             }
 
             if (st == null) return;
-            st.StudentGroup = newGroup;
+            st.ChangeGroup(newGroup);
             _assignments[newGroup].Add(st);
         }
     }

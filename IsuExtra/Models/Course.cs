@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using IsuExtra.Tools;
 
 namespace IsuExtra.Models
@@ -12,7 +13,7 @@ namespace IsuExtra.Models
             _groups = new List<Group>();
         }
 
-        public IEnumerable<Group> Groups => _groups;
+        public ReadOnlyCollection<Group> Groups => _groups.AsReadOnly();
         public CourseNumber CourseName { get; }
         public Group AddGrouptInCourse(string groupName, CourseNumber courseNumber, uint number)
         {

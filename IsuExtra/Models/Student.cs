@@ -23,6 +23,12 @@ namespace IsuExtra.Models
         public string Name { get; }
         public TimeTable TimeTableLessons => _timeTable;
         public Guid Id { get; }
-        public Group StudentGroup { get; set; }
+        public Group StudentGroup { get; private set; }
+
+        public void ChangeGroup(Group @group)
+        {
+            if (@group == null) throw new ArgumentNullException(nameof(@group));
+            StudentGroup = @group;
+        }
     }
 }

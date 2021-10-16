@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using IsuExtra.Tools;
 
 namespace IsuExtra.Models
@@ -10,19 +11,18 @@ namespace IsuExtra.Models
         private List<ExtraLesson> _extraLessons;
         public Faculty(string nameOfFaculty)
         {
-            NameOfFaculty = nameOfFaculty;
+            NameOfFaculty = nameOfFaculty ?? throw new ArgumentNullException(nameof(nameOfFaculty));
             _extraLessons = new List<ExtraLesson>();
             _courses = new List<Course>();
         }
 
-        public IEnumerable<Course> Courses => _courses;
-        public IEnumerable<ExtraLesson> ExtraLessons => _extraLessons;
-
+        public ReadOnlyCollection<ExtraLesson> ExtraLessons => _extraLessons.AsReadOnly();
         public string NameOfFaculty { get; }
 
         public Course AddCourse(CourseNumber course)
         {
-            if (_courses.Count > 4) throw new IsuExtraException(" The course is overcrowed ");
+            if (course == null) throw new ArgumentNullException(nameof(course));
+            if (_courses.Count > 4) throw new IsuExtraException("The course is overcrowed");
             var nameCourse = new Course(course);
             _courses.Add(nameCourse);
             return nameCourse;
@@ -30,6 +30,7 @@ namespace IsuExtra.Models
 
         public ExtraLesson AddExtraLesson(ExtraLesson extraLesson)
         {
+            if (extraLesson == null) throw new ArgumentNullException(nameof(extraLesson));
             _extraLessons.Add(extraLesson);
             return extraLesson;
         }
