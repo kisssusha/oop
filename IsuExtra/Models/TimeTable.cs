@@ -20,7 +20,7 @@ namespace IsuExtra.Models
 
         public void AddLesson(Lesson les)
         {
-            if (les == null) throw new ArgumentNullException(nameof(les));
+            if (les == null) throw new IsuExtraException("Invalid les");
 
             if (_timeTable.Any(lesson => lesson.TimeOfLesson + _duringOfLesson > les.TimeOfLesson &&
                                          les.TimeOfLesson + _duringOfLesson > lesson.TimeOfLesson))

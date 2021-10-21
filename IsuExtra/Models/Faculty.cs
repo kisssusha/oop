@@ -21,7 +21,7 @@ namespace IsuExtra.Models
 
         public Course AddCourse(CourseNumber course)
         {
-            if (course == null) throw new ArgumentNullException(nameof(course));
+            if (course == null) throw new IsuExtraException("Invalid course");
             if (_courses.Count > 4) throw new IsuExtraException("The course is overcrowded");
             var nameCourse = new Course(course);
             _courses.Add(nameCourse);
@@ -30,7 +30,7 @@ namespace IsuExtra.Models
 
         public ExtraLesson AddExtraLesson(ExtraLesson extraLesson)
         {
-            if (extraLesson == null) throw new ArgumentNullException(nameof(extraLesson));
+            if (extraLesson == null) throw new IsuExtraException("Invalid extraLesson");
             _extraLessons.Add(extraLesson);
             return extraLesson;
         }

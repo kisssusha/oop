@@ -1,4 +1,5 @@
 using System;
+using IsuExtra.Tools;
 
 namespace IsuExtra.Models
 {
@@ -6,7 +7,7 @@ namespace IsuExtra.Models
     {
         public Teacher(string name)
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Name = name ?? throw new IsuExtraException("Invalid name");
         }
 
         public string Name { get; }

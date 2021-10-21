@@ -27,7 +27,7 @@ namespace IsuExtra.Models
 
         public void ChangeGroup(Group @group)
         {
-            if (@group == null) throw new ArgumentNullException(nameof(@group));
+            if (@group == null) throw new IsuExtraException("Invalid group");
             StudentGroup = @group;
         }
     }
