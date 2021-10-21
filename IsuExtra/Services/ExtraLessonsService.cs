@@ -4,6 +4,7 @@ using System.Linq;
 using Isu.Services;
 using IsuExtra.Models;
 using IsuEXtra.Services;
+using IsuExtra.Tools;
 
 namespace IsuExtra.Services
 {
@@ -19,7 +20,7 @@ namespace IsuExtra.Services
 
         public IEnumerable<IsuExtraStream> GetStreams(ExtraLesson extraLesson)
         {
-            if (extraLesson == null) throw new Exception("Faluty hasn't the ognpCourse");
+            if (extraLesson == null) throw new IsuExtraException("Faluty hasn't the ognpCourse");
             ExtraLesson ex = _isuExtraService.Faculties.Keys
                 .SelectMany(faculty => faculty.ExtraLessons)
                 .FirstOrDefault(c => c.NameExtraLesson == extraLesson.NameExtraLesson);

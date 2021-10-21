@@ -22,7 +22,7 @@ namespace IsuExtra.Models
         public Course AddCourse(CourseNumber course)
         {
             if (course == null) throw new ArgumentNullException(nameof(course));
-            if (_courses.Count > 4) throw new IsuExtraException("The course is overcrowed");
+            if (_courses.Count > 4) throw new IsuExtraException("The course is overcrowded");
             var nameCourse = new Course(course);
             _courses.Add(nameCourse);
             return nameCourse;

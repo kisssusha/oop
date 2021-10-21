@@ -22,7 +22,7 @@ namespace IsuExtra.Models
 
         public IsuExtraStream AddExtraStream(IsuExtraStream isuExtraStream)
         {
-            if (isuExtraStream == null) throw new ArgumentNullException(nameof(isuExtraStream));
+            if (isuExtraStream == null) throw new IsuExtraException("Invalid isuExtraStream");
             if (_isuExtraStreams.Any(n => n.Name == isuExtraStream.Name))
                 throw new IsuExtraException("IsuExtraStream already in use");
             _isuExtraStreams.Add(isuExtraStream);

@@ -15,7 +15,7 @@ namespace IsuExtra.Models
 
         public ReadOnlyCollection<Group> Groups => _groups.AsReadOnly();
         public CourseNumber CourseName { get; }
-        public Group AddGrouptInCourse(string groupName, CourseNumber courseNumber, uint number)
+        public Group AddGroupInCourse(string groupName, CourseNumber courseNumber, uint number)
         {
             var group = new Group(groupName, courseNumber, number);
             _groups.Add(group);
