@@ -1,4 +1,8 @@
-﻿namespace Backups
+﻿using System;
+using Backups.Models;
+using Backups.Services;
+
+namespace Backups
 {
     internal class Program
     {
