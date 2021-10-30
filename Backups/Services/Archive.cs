@@ -9,15 +9,15 @@ namespace Backups.Services
     {
         private List<Storage> _storages;
 
-        public Archive(string wayOfArchive, long size)
+        public Archive(string pathOfArchive, long size)
         {
             _storages = new List<Storage>();
-            if (wayOfArchive == null) throw new BackupsException("Invalid wayOfArchive");
-            WayOfArchive = wayOfArchive;
+            if (pathOfArchive == null) throw new BackupsException("Invalid wayOfArchive");
+            PathOfArchive = pathOfArchive;
             Size = size;
         }
 
-        public string WayOfArchive { get; }
+        public string PathOfArchive { get; }
         public long Size { get; set; }
 
         public ReadOnlyCollection<Storage> Storages => _storages.AsReadOnly();

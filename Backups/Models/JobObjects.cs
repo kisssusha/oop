@@ -33,7 +33,7 @@ namespace Backups.Models
         public void RemoveObjects(File jobObject)
         {
             if (jobObject == null) throw new BackupsException("Invalid jobObject");
-            if (_objects.Any(jb => jb.WayOfFile == jobObject.WayOfFile)) _objects.Remove(jobObject);
+            if (_objects.Any(jb => jb.PathOfFile == jobObject.PathOfFile)) _objects.Remove(jobObject);
         }
     }
 }
