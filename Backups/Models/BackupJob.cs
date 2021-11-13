@@ -26,24 +26,17 @@ namespace Backups.Models
         public JobObjects JobObjectBackup { get; }
         public string WayOfBackupckup { get; }
 
-        public void StartBackup(string option)
+        public void StartBackup(string algorithmName)
         {
-            switch (option)
+            IAlgorithmic algo = algorithmName switch
             {
-                case "SingleStorage":
-                    IAlgorithmic algo1 = new SingleAlgo();
-                    var restorePoint1 = new RestorePoint(algo1.StartAlgorithmic(JobObjectBackup, _repository));
-                    _restorePoints.Add(restorePoint1);
-                    break;
+                "SingleStorage" => new SingleAlgo(),
+                "SplitStorage" => new SplitAlgo(),
+                _ => throw new BackupsException("Unsupported algorithmName", new ArgumentOutOfRangeException(nameof(algorithmName)))
+            };
 
-                case "SplitStorage":
-                    IAlgorithmic algo2 = new SplitAlgo();
-                    var restorePoint2 = new RestorePoint(algo2.StartAlgorithmic(JobObjectBackup, _repository));
-                    _restorePoints.Add(restorePoint2);
-                    break;
-                default:
-                    throw new BackupsException("Unsupported option", new ArgumentOutOfRangeException(nameof(option)));
-            }
+            var restorePoint2 = new RestorePoint(algo.StartAlgorithmic(JobObjectBackup, _repository));
+            _restorePoints.Add(restorePoint2);
         }
     }
 }
