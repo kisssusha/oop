@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using BackupsExtra.Models.ClearAlgo;
 using BackupsExtra.Services;
 using BackupsExtra.Tools;
@@ -64,12 +65,13 @@ namespace BackupsExtra.Models
 
             var restorePoint = new RestorePoint(algo.StartAlgorithmic(_jobObjects, _repository));
             _restorePoints.Add(restorePoint);
+            restorePoint.AddAlgo(algorithmName);
             _logger?.Log($"Add {restorePoint} in backup");
 
             return restorePoint;
         }
 
-        public void StartClear(string clearAlgorithmName)
+       /* public void CreationClear(string clearAlgorithmName)
         {
             IClear algo = clearAlgorithmName switch
             {
@@ -80,7 +82,7 @@ namespace BackupsExtra.Models
                 _ => throw new BackupsExtraException("Unsupported clearAlgorithmName", new ArgumentOutOfRangeException(nameof(clearAlgorithmName)))
             };
             algo.Clear(this);
-        }
+        }*/
 
         public void RemoveRestorePoint(RestorePoint restorePoint)
         {
@@ -103,6 +105,38 @@ namespace BackupsExtra.Models
             }
 
             _logger?.Log($"Selected {option} recovery");
+        }
+
+        public void Merge(RestorePoint restorePoint1, RestorePoint restorePoint2, string option)
+        {
+            switch (option)
+            {
+                case "option1":
+                    if (restorePoint2.AccessRestorePoint.Count != 0)
+                    {
+                        for (int i = 0; i < restorePoint1.AccessRestorePoint.Count; i++)
+                        {
+                            restorePoint1.RemoveStorage(restorePoint1.AccessRestorePoint[i]);
+                            i--;
+                        }
+                    }
+
+                    break;
+                case "option2":
+                    if (restorePoint2.AccessRestorePoint.Count == 0)
+                    {
+                        foreach (var t in restorePoint1.AccessRestorePoint)
+                        {
+                            restorePoint2.AddStorage(t);
+                        }
+                    }
+
+                    break;
+                case "option3":
+                    if (restorePoint2.Algo == "SingleStorage")
+                        RemoveRestorePoint(restorePoint1);
+                    break;
+            }
         }
     }
 }

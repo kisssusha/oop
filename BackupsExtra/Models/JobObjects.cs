@@ -26,7 +26,6 @@ namespace BackupsExtra.Models
         public void AddObjects(File jobObject)
         {
             if (jobObject == null) throw new BackupsExtraException("Invalid jobObject");
-            if (_objects.Contains(jobObject)) throw new BackupsExtraException("File already exist");
             _objects.Add(jobObject);
         }
 

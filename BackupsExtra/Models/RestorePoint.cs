@@ -31,9 +31,16 @@ namespace BackupsExtra.Models
             }
         }
 
+        public string Algo { get; set; }
+
         public ReadOnlyCollection<Storage> AccessRestorePoint => _storages.AsReadOnly();
 
-        public void AddArchive(Storage archive)
+        public void AddAlgo(string algo)
+        {
+            Algo = algo;
+        }
+
+        public void AddStorage(Storage archive)
         {
             if (archive == null) throw new BackupsExtraException("Invalid archive");
             _storages.Add(archive);
@@ -48,6 +55,11 @@ namespace BackupsExtra.Models
             }
 
             return listFiles;
+        }
+
+        public void RemoveStorage(Storage storage)
+        {
+            _storages.Remove(storage);
         }
     }
 }
