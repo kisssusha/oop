@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BackupsExtra.Services;
-using BackupsExtra.Tools;
 
-namespace BackupsExtra.Models
+namespace BackupsExtra.Models.ClearAlgo
 {
+    [Serializable]
     public class HybridClear : IClear
     {
         private List<IClear> _clearAlgo;

@@ -5,6 +5,7 @@ using BackupsExtra.Tools;
 
 namespace BackupsExtra.Models
 {
+    [Serializable]
     public class Storage : IEquatable<Storage>
     {
     private List<File> _files;

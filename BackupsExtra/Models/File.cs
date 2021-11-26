@@ -4,6 +4,7 @@ using BackupsExtra.Tools;
 
 namespace BackupsExtra.Models
 {
+    [Serializable]
     public class File : IEquatable<File>
     {
         public File(string pathOfFile, long sizeFile)

@@ -6,6 +6,7 @@ using BackupsExtra.Tools;
 
 namespace BackupsExtra.Models
 {
+    [Serializable]
     public class RestorePoint
     {
         private List<Storage> _storages;

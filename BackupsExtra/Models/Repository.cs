@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BackupsExtra.Services;
@@ -5,6 +6,7 @@ using BackupsExtra.Tools;
 
 namespace BackupsExtra.Models
 {
+    [Serializable]
     public class Repository
     {
         private List<Storage> _archivesInRepository;

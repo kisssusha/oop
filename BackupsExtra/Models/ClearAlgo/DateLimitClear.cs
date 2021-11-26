@@ -1,9 +1,9 @@
 using System;
 using BackupsExtra.Services;
-using BackupsExtra.Tools;
 
-namespace BackupsExtra.Models
+namespace BackupsExtra.Models.ClearAlgo
 {
+    [Serializable]
     public class DateLimitClear : IClear
     {
         private DateTime _limitValue;

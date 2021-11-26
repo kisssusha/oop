@@ -8,6 +8,7 @@ using BackupsExtra.Tools;
 
 namespace BackupsExtra.Models
 {
+    [Serializable]
     public class BackupJob
     {
         private List<RestorePoint> _restorePoints;
@@ -71,19 +72,6 @@ namespace BackupsExtra.Models
             return restorePoint;
         }
 
-       /* public void CreationClear(string clearAlgorithmName)
-        {
-            IClear algo = clearAlgorithmName switch
-            {
-                "CountLimitClear" => new CountLimitClear(),
-                "DateLimitClear" => new DateLimitClear(DateTime.Now),
-                "HybridClear" => new HybridClear(),
-                "HybridOneLimitClear" => new HybridOneLimitClear(),
-                _ => throw new BackupsExtraException("Unsupported clearAlgorithmName", new ArgumentOutOfRangeException(nameof(clearAlgorithmName)))
-            };
-            algo.Clear(this);
-        }*/
-
         public void RemoveRestorePoint(RestorePoint restorePoint)
         {
             _restorePoints.Remove(restorePoint);
@@ -125,7 +113,7 @@ namespace BackupsExtra.Models
                 case "option2":
                     if (restorePoint2.AccessRestorePoint.Count == 0)
                     {
-                        foreach (var t in restorePoint1.AccessRestorePoint)
+                        foreach (Storage t in restorePoint1.AccessRestorePoint)
                         {
                             restorePoint2.AddStorage(t);
                         }

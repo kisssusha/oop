@@ -1,9 +1,11 @@
+using System;
 using System.Linq;
 using BackupsExtra.Services;
 using BackupsExtra.Tools;
 
 namespace BackupsExtra.Models.ClearAlgo
 {
+    [Serializable]
     public class CountLimitClear : IClear
     {
         private int _limitValue;

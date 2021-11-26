@@ -2,6 +2,7 @@ using System;
 
 namespace BackupsExtra.Services
 {
+    [Serializable]
     public class ConsoleLog : ILogger
     {
         private bool _turnPrefix;

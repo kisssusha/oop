@@ -1,5 +1,8 @@
-﻿using BackupsExtra.Models;
+﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using BackupsExtra.Models;
 using BackupsExtra.Models.ClearAlgo;
+using File = BackupsExtra.Models.File;
 
 namespace BackupsExtra
 {
@@ -7,6 +10,9 @@ namespace BackupsExtra
     {
         private static void Main()
         {
+            var formatter = new BinaryFormatter();
+            var fileStream = new FileStream("./BackupJob.dat", FileMode.OpenOrCreate);
+
             var file1 = new File("\\path\\file1", 45);
             var file2 = new File("\\path\\file2", 46);
             var file3 = new File("\\path\\file3", 46);
@@ -24,6 +30,7 @@ namespace BackupsExtra
             var countClear = new CountLimitClear(backup);
             countClear.AddLimit(2);
             countClear.Clear();
+            formatter.Serialize(fileStream, backup);
         }
     }
 }

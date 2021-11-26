@@ -1,7 +1,9 @@
+using System;
 using BackupsExtra.Services;
 
 namespace BackupsExtra.Models.ClearAlgo
 {
+    [Serializable]
     public class CountStorageLimitClear : IClear
     {
         private int _limitValue;

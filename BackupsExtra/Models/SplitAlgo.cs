@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BackupsExtra.Services;
@@ -5,6 +6,7 @@ using BackupsExtra.Tools;
 
 namespace BackupsExtra.Models
 {
+    [Serializable]
     public class SplitAlgo : IAlgorithmic
     {
         public List<Storage> StartAlgorithmic(JobObjects jobObjects, Repository repository)

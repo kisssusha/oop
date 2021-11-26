@@ -3,6 +3,7 @@ using System.IO;
 
 namespace BackupsExtra.Services
 {
+    [Serializable]
     public class FileLog : ILogger
     {
         private bool _turnPrefix;
