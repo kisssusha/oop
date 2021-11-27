@@ -16,25 +16,25 @@ namespace BackupsExtra.Models.ClearAlgo
         public RestorePoint RestorePointInClear { get; }
 
         public void AddLimit(int amount)
-            {
+        {
                 _limitValue = amount;
-            }
+        }
 
         public bool IsLimitExceeded()
-            {
+        {
                 return _limitValue < RestorePointInClear.AccessRestorePoint.Count;
-            }
+        }
 
         public void Clear()
+        {
+            for (int i = 0; i < RestorePointInClear.AccessRestorePoint.Count; i++)
             {
-                for (int i = 0; i < RestorePointInClear.AccessRestorePoint.Count; i++)
+                if (IsLimitExceeded())
                 {
-                    if (IsLimitExceeded())
-                    {
-                        RestorePointInClear.RemoveStorage(RestorePointInClear.AccessRestorePoint[i]);
-                        i--;
-                    }
+                    RestorePointInClear.RemoveStorage(RestorePointInClear.AccessRestorePoint[i]);
+                    i--;
                 }
             }
+        }
     }
 }
